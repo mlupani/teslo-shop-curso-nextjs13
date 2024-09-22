@@ -1,11 +1,27 @@
-import { Title } from "@/components";
+export const revalidate = 60;
+
+
+import { getPaginatedProductsWithImages } from "@/actions";
+import { Pagination, Title } from "@/components";
 import ProductGrid from "@/components/ui/product-grid/ProductGrid";
-import { initialData } from "@/seed/seed";
-
-const products = initialData.products;
-
+import { redirect } from "next/navigation";
 //import { geistSans, titleFont } from "@/config/fonts";
-export default function Home() {
+
+interface Props {
+  searchParams: {
+    page?: string;
+  }
+}
+
+export default async function Home({ searchParams } :Props) {
+
+  const page = searchParams.page ? +searchParams.page : 1;
+  const { products, totalPages } = await getPaginatedProductsWithImages({page});
+
+  if(!products.length){
+    redirect('/');
+  }
+
   return (
     <>
       {/*<h1 className={titleFont.className}>hola mundo (Fuente desde google)</h1>*/}
@@ -18,6 +34,8 @@ export default function Home() {
       />
 
       <ProductGrid products={products} />
+
+      <Pagination totalPages={totalPages}  />
     </>
   );
 }
