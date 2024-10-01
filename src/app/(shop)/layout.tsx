@@ -9,11 +9,12 @@ export const metadata: Metadata = {
   description: 'Una tienda de productos',
 }
 
-export default function ShopLayout({
+export default  function ShopLayout({
  children
 }: {
  children: React.ReactNode;
 }) {
+
   return (
     <main className="min-h-screen">
 

@@ -11,13 +11,13 @@ export const ProductsInCart = () => {
     const { cart, updateProductQuantity, removeProduct } = useCartStore(state => state)
     const [loaded, setLoaded] = useState(false)
 
-    if(cart.length === 0) redirect('/empty')
-
     useEffect(() => {
       setLoaded(true)
     }, [])
     
     if(!loaded) return <p>Loading...</p>
+
+	if(loaded) if(cart.length === 0) redirect('/empty')
 
 	return (
 		<>
