@@ -33,8 +33,6 @@ export const placeOrder = async (
 		},
 	});
 
-	console.log({ productsInCart });
-
 	const itemsInOrder = productsInCart.reduce(
 		(count, prod) => prod.quantity + count,
 		0

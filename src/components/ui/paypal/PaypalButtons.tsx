@@ -29,8 +29,6 @@ export const PaypalButtons = ({orderId, amount}: Props) => {
       ],
     });
 
-    console.log({transactionId})
-
     const resp = await setTransactionId(orderId, transactionId);
     if(!resp.ok){
       throw new Error('Error setting transactionId');
