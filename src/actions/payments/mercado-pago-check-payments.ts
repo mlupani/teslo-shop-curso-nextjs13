@@ -32,7 +32,7 @@ export async function submitPayment({orderId, roundedAmount}: Props): Promise<st
             title: `${product.title} - ${size}`,
         })),
         back_urls:{
-            success: `http://localhost:3000/orders/${orderId}`,
+            success: `/orders/${orderId}`,
         },
         external_reference: orderId,
         statement_descriptor: 'Tienda de ropa',
