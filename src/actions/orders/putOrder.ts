@@ -141,10 +141,10 @@ export const placeOrder = async (
             orden: prismaTx.orden,
             updatedProducts: prismaTx.updatedProducts
         }
-	} catch (error: any) {
+	} catch (error: unknown) {
+		console.log(error)
 		return {
 			ok: false,
-			message: error?.message,
 		};
 	}
 };
