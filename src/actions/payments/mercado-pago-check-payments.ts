@@ -10,6 +10,8 @@ const mercadopago = new MercadoPagoConfig({
     accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN ?? '',
 })
 
+const site_url = process.env.SITE_URL ?? ''
+
 interface Props {
     orderId: string;
     roundedAmount: number;
@@ -32,7 +34,7 @@ export async function submitPayment({orderId, roundedAmount}: Props): Promise<st
             title: `${product.title} - ${size}`,
         })),
         back_urls:{
-            success: `${process.env.SITE_URL}/orders/${orderId}`,
+            success: `${site_url}/orders/${orderId}`,
         },
         external_reference: orderId,
         statement_descriptor: 'Tienda de ropa',
