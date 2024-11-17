@@ -12,7 +12,9 @@ export const getProductBySlug = async ({ slug }: Props) => {
             include: {
                 productImage: {
                     select: {
-                        url: true
+                        id: true,
+                        url: true,
+                        productId: true
                     },
                 }
             },
