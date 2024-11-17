@@ -6,24 +6,14 @@ import { titleFont } from "@/config/fonts"
 import { useCartStore } from "@/store/cart/cart-store"
 import { useUIStore } from "@/store/ui/ui-store"
 import { IoCartOutline, IoSearchOutline } from "react-icons/io5"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { Search } from "../search/Search"
 
 export const TopMenu = () => {
 
-  const searchParams = useSearchParams();
   const { openSideMenu } = useUIStore(state => state)
   const totalItemsInCart = useCartStore(state => state.getTotalItems());
   const [loaded, setLoaded] = useState(false);
-  const [search, setSearch] = useState(searchParams.get('search') ?? '')
   const [showSearch, setShowSearch] = useState(false)
-  const pathName = usePathname();
-  const router = useRouter();
-
-  const createSearchUrl = () => {
-    const params = new URLSearchParams(searchParams);
-    params.set('search', search);
-    router.push(`${pathName}?${params.toString()}`);
-  }
 
   useEffect(() => {
     setLoaded(true);
@@ -57,7 +47,7 @@ export const TopMenu = () => {
             </button>
             {
               showSearch && (
-                <input type="text" onKeyDown={(e) => e.key === 'Enter' && createSearchUrl()}  autoFocus onChange={(e) => setSearch(e.target.value)} placeholder="Buscar" className={`transition-all px-2 rounded-md `} />
+                <Search />
               )
             }
           </div>
