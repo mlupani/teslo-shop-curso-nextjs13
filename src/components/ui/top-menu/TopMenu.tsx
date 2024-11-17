@@ -56,8 +56,9 @@ export const TopMenu = () => {
               <IoSearchOutline className="w-5 h-5" />
             </button>
             {
-              showSearch &&
+              showSearch && (
                 <input type="text" onKeyDown={(e) => e.key === 'Enter' && createSearchUrl()}  autoFocus onChange={(e) => setSearch(e.target.value)} placeholder="Buscar" className={`transition-all px-2 rounded-md `} />
+              )
             }
           </div>
 
