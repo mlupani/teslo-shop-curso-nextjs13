@@ -7,9 +7,10 @@ interface PaginatedProducts {
     page?: number;
     take?: number;
     gender?: Gender;
+    search? : string;
 }
 
-export const getPaginatedProductsWithImages = async ({ page = 1, take = 12, gender }:PaginatedProducts) => {
+export const getPaginatedProductsWithImages = async ({ page = 1, take = 12, gender, search }:PaginatedProducts) => {
 
     if(isNaN(page) || page < 1) page = 1;
     if(isNaN(take) || take < 0) take = 12;
@@ -20,6 +21,10 @@ export const getPaginatedProductsWithImages = async ({ page = 1, take = 12, gend
             skip: (page - 1) * take,
             where: {
                 gender,
+                title: {
+                    contains: search,
+                    mode: 'insensitive',
+                }
             },
             include: {
                 productImage: {
@@ -34,6 +39,10 @@ export const getPaginatedProductsWithImages = async ({ page = 1, take = 12, gend
         const totalProductsPromise = prisma.product.count({
             where: {
                 gender,
+                title: {
+                    contains: search,
+                    mode: 'insensitive',
+                }
             }
         });
         const [products, totalProducts] = await Promise.all([productsPromise, totalProductsPromise]);

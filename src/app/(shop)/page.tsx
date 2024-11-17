@@ -10,17 +10,15 @@ import { redirect } from "next/navigation";
 interface Props {
   searchParams: {
     page?: string;
+    search?: string;
   }
 }
 
 export default async function Home({ searchParams } :Props) {
 
   const page = searchParams.page ? +searchParams.page : 1;
-  const { products, totalPages } = await getPaginatedProductsWithImages({page});
-
-  if(!products.length){
-    redirect('/');
-  }
+  const search = searchParams.search ? searchParams.search : '';
+  const { products, totalPages } = await getPaginatedProductsWithImages({page, search});
 
   return (
     <>
@@ -29,13 +27,18 @@ export default async function Home({ searchParams } :Props) {
       {/*<h1 className={geistSans.className}>hola mundo</h1>*/}
       <Title
         title="Tienda"
-        subtitle="Todos los productos"
+        subtitle={search ? `Resultados de la búsqueda: ${search}` : 'Todos los productos'}
         className="mb-2"
       />
 
       <ProductGrid products={products} />
 
-      <Pagination totalPages={totalPages}  />
+      {
+        totalPages === 0 && <p className="text-center mt-10 mb-20">No se encontraron productos</p>
+      }
+      {
+        totalPages ? <Pagination totalPages={totalPages}  /> : null
+      }
     </>
   );
 }
